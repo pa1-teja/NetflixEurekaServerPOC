@@ -1,9 +1,8 @@
-package com.example.CarPricing.Controllers;
+package com.example.carPricing.api;
 
-
-import com.example.CarPricing.Domain.price.Price;
-import com.example.CarPricing.Services.PriceException;
-import com.example.CarPricing.Services.PricingService;
+import com.example.carPricing.domain.price.Price;
+import com.example.carPricing.service.PriceException;
+import com.example.carPricing.service.PricingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +10,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Implements a REST-based controller for the pricing service.
+ */
 @RestController
 @RequestMapping("/services/price")
 public class PricingController {
 
+    private final PricingService service;
+
+    PricingController(PricingService pricingService) {
+        this.service = pricingService;
+    }
 
     /**
      * Gets the price for a requested vehicle.
@@ -24,7 +31,7 @@ public class PricingController {
     @GetMapping
     public Price get(@RequestParam Long vehicleId) {
         try {
-            return PricingService.getPrice(vehicleId);
+            return this.service.getPrice(vehicleId);
         } catch (PriceException ex) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Price Not Found", ex);

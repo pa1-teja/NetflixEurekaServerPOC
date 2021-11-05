@@ -1,4 +1,4 @@
-package com.example.vehiclesapi.Client.Maps;
+package com.example.vehiclesapi.client.maps;
 
 /**
  * Declares a class to store an address, city, state and zip code.
@@ -9,6 +9,9 @@ public class Address {
     private String city;
     private String state;
     private String zip;
+
+    public Address() {
+    }
 
     public String getAddress() {
         return address;

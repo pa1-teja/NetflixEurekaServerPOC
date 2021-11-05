@@ -1,15 +1,21 @@
-package com.example.vehiclesapi.Domain.Car;
+package com.example.vehiclesapi.domain.car;
 
-import com.example.vehiclesapi.Domain.Location;
+import com.example.vehiclesapi.domain.Condition;
+import com.example.vehiclesapi.domain.Location;
+import java.time.LocalDateTime;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.util.concurrent.locks.Condition;
 
 /**
  * Declares the Car class, related variables and methods.
@@ -26,7 +32,7 @@ public class Car {
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime modifiesAt;
+    private LocalDateTime modifiedAt;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -38,11 +44,10 @@ public class Car {
 
     @Valid
     @Embedded
-    private Location location = new Location(0d,0d);
+    private Location location = new Location(0d, 0d);
 
     @Transient
     private String price;
-
 
     public Long getId() {
         return id;
@@ -60,12 +65,12 @@ public class Car {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getModifiesAt() {
-        return modifiesAt;
+    public LocalDateTime getModifiedAt() {
+        return modifiedAt;
     }
 
-    public void setModifiesAt(LocalDateTime modifiesAt) {
-        this.modifiesAt = modifiesAt;
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 
     public Condition getCondition() {
@@ -99,6 +104,4 @@ public class Car {
     public void setPrice(String price) {
         this.price = price;
     }
-
-
 }

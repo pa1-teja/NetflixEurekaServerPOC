@@ -1,28 +1,36 @@
-package com.example.vehiclesapi.Controllers;
+package com.example.vehiclesapi.api;
 
-import com.example.vehiclesapi.Domain.Car.Car;
-import com.example.vehiclesapi.Services.CarService;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import com.example.vehiclesapi.domain.car.Car;
+import com.example.vehiclesapi.service.CarService;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Implements a REST-based controller for the Vehicles API.
  */
 @RestController
 @RequestMapping("/cars")
-public class CarController {
-
+class CarController {
 
     private final CarService carService;
     private final CarResourceAssembler assembler;
@@ -40,7 +48,7 @@ public class CarController {
     Resources<Resource<Car>> list() {
         List<Resource<Car>> resources = carService.list().stream().map(assembler::toResource)
                 .collect(Collectors.toList());
-        return new Resources(resources,
+        return new Resources<>(resources,
                 linkTo(methodOn(CarController.class).list()).withSelfRel());
     }
 
@@ -51,14 +59,7 @@ public class CarController {
      */
     @GetMapping("/{id}")
     Resource<Car> get(@PathVariable Long id) {
-        /**
-         * TODO: Use the `findById` method from the Car Service to get car information.
-         * TODO: Use the `assembler` on that car and return the resulting output.
-         *   Update the first line as part of the above implementing.
-         */
-          Car car = carService.findById(id);
-
-        return assembler.toResource(car);
+        return assembler.toResource(this.carService.findById(id));
     }
 
     /**
@@ -69,13 +70,7 @@ public class CarController {
      */
     @PostMapping
     ResponseEntity<?> post(@Valid @RequestBody Car car) throws URISyntaxException {
-        /**
-         * TODO: Use the `save` method from the Car Service to save the input car.
-         * TODO: Use the `assembler` on that saved car and return as part of the response.
-         *   Update the first line as part of the above implementing.
-         */
-         Car carr = carService.save(car);
-        Resource<Car> resource = assembler.toResource(carr);
+        Resource<Car> resource = assembler.toResource(this.carService.save(car));
         return ResponseEntity.created(new URI(resource.getId().expand().getHref())).body(resource);
     }
 
@@ -87,15 +82,8 @@ public class CarController {
      */
     @PutMapping("/{id}")
     ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) {
-        /**
-         * TODO: Set the id of the input car object to the `id` input.
-         * TODO: Save the car using the `save` method from the Car service
-         * TODO: Use the `assembler` on that updated car and return as part of the response.
-         *   Update the first line as part of the above implementing.
-         */
         car.setId(id);
-        car = carService.save(car);
-        Resource<Car> resource = assembler.toResource(car);
+        Resource<Car> resource = assembler.toResource(this.carService.save(car));
         return ResponseEntity.ok(resource);
     }
 
@@ -106,10 +94,7 @@ public class CarController {
      */
     @DeleteMapping("/{id}")
     ResponseEntity<?> delete(@PathVariable Long id) {
-        /**
-         * TODO: Use the Car Service to delete the requested vehicle.
-         */
-        carService.delete(id);
+        this.carService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

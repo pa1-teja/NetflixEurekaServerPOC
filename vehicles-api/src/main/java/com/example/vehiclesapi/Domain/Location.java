@@ -1,20 +1,23 @@
-package com.example.vehiclesapi.Domain;
+package com.example.vehiclesapi.domain;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 /**
  * Stores information about a given location.
  * Latitude and longitude must be provided, while other
  * location information must be gathered each time from
- * the maps Controllers.
+ * the maps API.
  */
 @Embeddable
 public class Location {
 
-    private Double latitude;
+    @NotNull
+    private Double lat;
 
-    private Double longitude;
+    @NotNull
+    private Double lon;
 
     @Transient
     private String address;
@@ -28,26 +31,20 @@ public class Location {
     @Transient
     private String zip;
 
-
-    public Location(Double latitude, Double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Location() {
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public Location(Double lat, Double lon) {
+        this.lat = lat;
+        this.lon = lon;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+    public Double getLat() {
+        return lat;
     }
 
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public Double getLon() {
+        return lon;
     }
 
     public String getAddress() {

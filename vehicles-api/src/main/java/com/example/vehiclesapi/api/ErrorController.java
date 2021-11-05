@@ -1,4 +1,7 @@
-package com.example.vehiclesapi.Controllers;
+package com.example.vehiclesapi.api;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -7,10 +10,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 /**
  * Implements the Error controller related to any errors handled by the Vehicles API
@@ -35,3 +34,4 @@ public class ErrorController extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, apiError, headers, HttpStatus.BAD_REQUEST, request);
     }
 }
+

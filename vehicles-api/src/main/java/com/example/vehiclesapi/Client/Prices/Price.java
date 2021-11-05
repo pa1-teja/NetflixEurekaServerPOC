@@ -1,5 +1,4 @@
-package com.example.vehiclesapi.Client.Prices;
-
+package com.example.vehiclesapi.client.prices;
 
 import java.math.BigDecimal;
 
@@ -11,6 +10,9 @@ public class Price {
     private String currency;
     private BigDecimal price;
     private Long vehicleId;
+
+    public Price() {
+    }
 
     public String getCurrency() {
         return currency;

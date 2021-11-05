@@ -1,11 +1,17 @@
-package com.example.vehiclesapi.Domain.Car;
+package com.example.vehiclesapi.domain.car;
 
-import com.example.vehiclesapi.Domain.Manufacturer.Manufacturer;
+import com.example.vehiclesapi.domain.manufacturer.Manufacturer;
 
+import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Declares the additional detail variables for each Car object,
+ * along with related methods for access and setting.
+ */
+@Embeddable
 public class Details {
 
     @NotBlank

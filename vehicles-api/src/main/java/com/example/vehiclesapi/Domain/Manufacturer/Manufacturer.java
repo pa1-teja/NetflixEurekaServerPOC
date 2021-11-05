@@ -1,5 +1,4 @@
-package com.example.vehiclesapi.Domain.Manufacturer;
-
+package com.example.vehiclesapi.domain.manufacturer;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +13,8 @@ public class Manufacturer {
     private Integer code;
     private String name;
 
+    public Manufacturer() { }
+
     public Manufacturer(Integer code, String name) {
         this.code = code;
         this.name = name;
@@ -23,15 +24,7 @@ public class Manufacturer {
         return code;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

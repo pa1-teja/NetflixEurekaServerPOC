@@ -1,4 +1,4 @@
-package com.example.vehiclesapi.Services;
+package com.example.vehiclesapi.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
